@@ -96,9 +96,9 @@ def select(slist, q=0, audio=False, m4a_ok=True, maxres=None):
         """ Return height aspect of resolution, eg 640x480 => 480. """
         return int(x['quality'].split("x")[1])
 
-    def getbitrate(x):
+    def getsize(x):
         """Return the bitrate of a stream."""
-        return x['rawbitrate']
+        return x['size']
 
     if audio:
         streams = [x for x in slist if x['mtype'] == "audio"]
@@ -111,7 +111,7 @@ def select(slist, q=0, audio=False, m4a_ok=True, maxres=None):
                 streams = [x for x in streams if x['ext'] == "webm"]
             if not streams:
                 streams = [x for x in slist if x['mtype'] == "audio"]
-        streams = sorted(streams, key=getbitrate, reverse=True)
+        streams = sorted(streams, key=getsize, reverse=True)
     else:
         streams = [x for x in slist if x['mtype'] == "video" and okres(x)]
         if not config.VIDEO_FORMAT.get == "auto":
